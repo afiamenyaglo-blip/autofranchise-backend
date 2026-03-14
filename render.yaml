@@ -1,0 +1,36 @@
+# render.yaml — Configuration déploiement Render.com
+# Documentation : https://render.com/docs/render-yaml
+
+services:
+  - type: web
+    name: autofranchise-api
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true        # Render génère automatiquement une clé sécurisée
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: DATABASE_URL
+        fromDatabase:
+          name: autofranchise-db
+          property: connectionString
+      - key: FRONTEND_URL
+        value: https://votre-site.netlify.app  # ← Mettez l'URL de votre frontend
+      - key: FLOOZ_API_KEY
+        sync: false                # À renseigner manuellement dans le dashboard Render
+      - key: TMONEY_API_KEY
+        sync: false
+
+  # Base de données MySQL sur Render
+  # Note : Render offre MySQL en plan payant. Pour gratuit → utiliser PlanetScale (ci-dessous)
+databases:
+  - name: autofranchise-db
+    databaseName: autofranchise
+    user: autofranchise_user
