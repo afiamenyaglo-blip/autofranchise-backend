@@ -32,6 +32,7 @@ app.use('/api/vehicules',    require('./routes/vehicules'));
 app.use('/api/reservations', require('./routes/reservations'));
 app.use('/api/paiements',    require('./routes/paiements'));
 app.use('/api/admin',        require('./routes/admin'));
+app.use('/api/messages',     require('./routes/messages'));
 
 // ── Route racine ─────────────────────────────────────────────────
 app.get('/', (req, res) => res.json({
